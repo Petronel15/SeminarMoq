@@ -18,19 +18,22 @@ namespace SeminarMoq.TestUnits
 		public void ShouldNotExportForNoCars()
 		{
 			//Arrange
-			//ICarRepository carRepository = new FakeCarRepository();
-			//IExcelService excelService = new FakeExcelService();
-			//CarsManager sut = new CarsManager(carRepository, excelService);
 			Mock<ICarRepository> mockCarRepository = new Mock<ICarRepository>();
+			mockCarRepository.Setup(p => p.GetAll()).Returns(new List<Car>());
+			var carRepo = mockCarRepository.Object;
+			
 			Mock<IExcelService> mockExcelService = new Mock<IExcelService>();
-			CarsManager sut = new CarsManager(mockCarRepository.Object, mockExcelService.Object);
-
+			mockExcelService.Setup(p => p.Export("fileDemo.csv", mockCarRepository.Object));
+			mockExcelService.SetupGet(p => p.Success).Returns(false);
+			var excelService = mockExcelService.Object;
 
 			//Act
-			bool result = sut.Export("fileDemo.csv");
-			
+			carRepo.GetAll();
+			excelService.Export("fileDemo.csv", mockCarRepository.Object);
+
 			//Assert
-			Assert.AreEqual(false,result);
+			mockCarRepository.Verify();
+			mockExcelService.Verify();
 		}
 
 

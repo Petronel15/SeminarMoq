@@ -72,8 +72,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestUnits\CarsManagerTests.cs" />
-    <Compile Include="TestUnits\FakeCarRepository.cs" />
-    <Compile Include="TestUnits\FakeExcelService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
